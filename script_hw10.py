@@ -1,4 +1,3 @@
-
 # заготовка для домашней работы
 # прочитайте про glob.glob
 # https://docs.python.org/3/library/glob.html
@@ -44,34 +43,39 @@
 import glob
 import os.path
 
+
 def get_files():
-	migrations = 'Migrations'
-	sql_files = glob.glob(os.path.join(migrations, "*.sql"))
-	return sql_files
+    migrations = 'Migrations'
+    sql_files = glob.glob(os.path.join(migrations, "*.sql"))
+    return sql_files
+
 
 def search_str_in_file(search_str, files):
-	file_list = [] #создаю пустой список для имен файлов с найденной строкой
-	file_sum = 0
-	for current_file in files:
-		with open(current_file, "r", encoding="utf-8") as file:
-			for lines in file:
-				line = file.readline()
-				if search_str in line:
-					file_sum += 1
-					print(current_file)
-					file_list.append(current_file) #на каждой итерации добавляю в список имя файла
-	print("Всего: {}" .format(file_sum)) 
-	return file_list
+    file_list = []  # создаю пустой список для имен файлов с найденной строкой
+    file_sum = 0
+    for current_file in files:
+        with open(current_file, "r", encoding="utf-8") as file:
+            for line in file:
+                if search_str in line:
+                    file_sum += 1
+                    print(current_file)
+                    file_list.append(current_file)  # на каждой итерации добавляю в список имя файла
+                    break
+    print("Всего: {}".format(file_sum))
+    return file_list
 
-def search_input(): # функция осуществляющая вывод строки поиска
-	search_str = str(input("Введите строку поиска:"))
-	return search_str
+
+def search_input():  # функция осуществляющая вывод строки поиска
+    search_str = str(input("Введите строку поиска:"))
+    return search_str
+
 
 def search_cycle():
-	search_str = search_input()
-	files = get_files()
-	while True:
-		files = search_str_in_file(search_str, files)
-		search_str = search_input()
+    search_str = search_input()
+    files = get_files()
+    while True:
+        files = search_str_in_file(search_str, files)
+        search_str = search_input()
+
 
 search_cycle()
